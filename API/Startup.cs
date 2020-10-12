@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using API.Data;
 
 namespace API
 {
@@ -30,6 +31,9 @@ namespace API
             var connection = Configuration.GetConnectionString("Chinook");
             services.AddDbContextPool<ChinookContext>(opt => opt.UseSqlServer(connection));
             services.AddControllers();
+
+            services.AddDbContext<APIContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("APIContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
